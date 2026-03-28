@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Email Login</h2>
+
+    {% if message %}
+    <p style="text-align:center; color:#c62828; margin-bottom:10px;">
+        {{ message }}
+    </p>
+    {% endif %}
+
+    <form method="POST">
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div style="text-align:center; margin-top:10px;">
+        <a href="{{ url_for('register.register') }}">Create account</a>
+    </div>
+</div>
+{% endblock %}

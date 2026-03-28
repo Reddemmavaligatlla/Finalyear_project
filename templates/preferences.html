@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card preferences-card">
+    <h2>Manage Your Preferences</h2>
+
+    <p class="subtitle">
+        You can add, edit, or remove your top 5 preferences anytime ✨
+    </p>
+
+    <!-- Add Preference -->
+    <div class="input-group dropdown">
+        <label>Add / Edit Preference</label>
+
+        <input
+            type="text"
+            id="categoryInput"
+            placeholder="Search categories..."
+            autocomplete="off"
+            onclick="toggleCategoryDropdown()"
+            onkeyup="filterCategories()"
+        >
+
+        <div id="categoryDropdown" class="dropdown-list">
+            <div onclick="selectCategory('Electronics')">📱 Electronics</div>
+            <div onclick="selectCategory('Books')">📚 Books</div>
+            <div onclick="selectCategory('Fashion')">👗 Fashion</div>
+            <div onclick="selectCategory('Home & Kitchen')">🏠 Home & Kitchen</div>
+            <div onclick="selectCategory('Beauty')">💄 Beauty</div>
+            <div onclick="selectCategory('Sports')">🏏 Sports</div>
+            <div onclick="selectCategory('Toys')">🧸 Toys</div>
+            <div onclick="selectCategory('Grocery')">🛒 Grocery</div>
+        </div>
+    </div>
+
+    <!-- Preferences List -->
+    <div class="selected-section">
+        <h4>My Preferences (Max 5)</h4>
+        <ul id="selectedPreferences" class="pref-list">
+            <li class="empty-text">No preferences selected yet</li>
+        </ul>
+    </div>
+
+    <!-- Save -->
+    <form method="POST">
+        <input type="hidden" name="preferences" id="preferencesInput">
+        <button type="submit" class="btn save-btn">Save Preferences</button>
+    </form>
+</div>
+
+<script>
+    const dropdown = document.getElementById("categoryDropdown");
+    const listContainer = document.getElementById("selectedPreferences");
+    const hiddenInput = document.getElementById("preferencesInput");
+    const inputBox = document.getElementById("categoryInput");
+
+    let selectedPreferences = {{ existing_preferences | default([]) | tojson }};
+    let editIndex = null;
+
+    /* Toggle Dropdown */
+    function toggleCategoryDropdown() {
+        dropdown.style.display =
+            dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    /* Filter Categories While Typing */
+    function filterCategories() {
+        const filter = inputBox.value.toUpperCase();
+        const items = dropdown.getElementsByTagName("div");
+
+        dropdown.style.display = "block";
+
+        for (let i = 0; i < items.length; i++) {
+            const txt = items[i].innerText;
+            items[i].style.display =
+                txt.toUpperCase().includes(filter) ? "block" : "none";
+        }
+    }
+
+    /* Select Category */
+    function selectCategory(category) {
+
+        inputBox.value = category;
+
+        if (editIndex !== null) {
+            selectedPreferences[editIndex] = category;
+            editIndex = null;
+        } else {
+
+            if (selectedPreferences.includes(category)) return;
+
+            if (selectedPreferences.length >= 5) {
+                alert("You can select only 5 preferences.");
+                return;
+            }
+
+            selectedPreferences.push(category);
+        }
+
+        dropdown.style.display = "none";
+        updateList();
+    }
+
+    /* Add Using Enter Key */
+    inputBox.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            const typedValue = inputBox.value.trim();
+            if (!typedValue) return;
+
+            const items = dropdown.getElementsByTagName("div");
+            let found = false;
+
+            for (let i = 0; i < items.length; i++) {
+
+                const textOnly = items[i].innerText
+                    .replace(/^[^\w]+/, '')
+                    .trim();
+
+                if (textOnly.toLowerCase() === typedValue.toLowerCase()) {
+                    selectCategory(textOnly);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                alert("Please select a valid category from list.");
+            }
+        }
+    });
+
+    /* Edit Preference */
+    function editPreference(index) {
+        inputBox.value = selectedPreferences[index];
+        editIndex = index;
+        toggleCategoryDropdown();
+    }
+
+    /* Remove Preference */
+    function removePreference(index) {
+        selectedPreferences.splice(index, 1);
+        updateList();
+    }
+
+    /* Update List UI */
+    function updateList() {
+
+        listContainer.innerHTML = "";
+
+        if (selectedPreferences.length === 0) {
+            listContainer.innerHTML =
+                `<li class="empty-text">No preferences selected yet</li>`;
+        }
+
+        selectedPreferences.forEach((pref, index) => {
+
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+                <span>${pref}</span>
+                <div>
+                    <button type="button" onclick="editPreference(${index})">✏️</button>
+                    <button type="button" onclick="removePreference(${index})">❌</button>
+                </div>
+            `;
+
+            listContainer.appendChild(li);
+        });
+
+        hiddenInput.value = selectedPreferences.join(",");
+    }
+
+    /* Close Dropdown When Clicking Outside */
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".dropdown")) {
+            dropdown.style.display = "none";
+        }
+    });
+
+    updateList();
+</script>
+
+{% endblock %}

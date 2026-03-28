@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="products-card">
+
+    <!-- Header -->
+    <div class="welcome-section">
+        <h2>{{ category|capitalize }} Products 🛒</h2>
+        <p class="subtitle">
+            Explore products selected for you
+        </p>
+    </div>
+
+    <!-- Products Grid -->
+    {% if products %}
+    <div class="products-grid">
+
+        {% for product in products %}
+        <div class="product-card product-card-clean">
+
+            <!-- Product Image -->
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <!-- Product Details -->
+            <h3 class="product-title">
+                {{ product.product_name }}
+            </h3>
+
+            <span class="category-badge">
+                {{ product.category_display }}
+            </span>
+
+            <p class="product-teaser">
+                Click <strong>View Product</strong> for full details
+            </p>
+
+            <div class="cart-actions clean-actions">
+                <a class="btn-cart"
+                   href="{{ url_for('product_details', user_id=user_id, product_id=product.product_id) }}">
+                    View Product
+                </a>
+                <a class="buy-btn"
+                   href="{{ url_for('buy_product', user_id=user_id, product_id=product.product_id) }}">
+                    Buy Now
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+        <p style="text-align:center; margin-top:30px;">
+            No products found in this category 😕
+        </p>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div style="text-align:center; margin-top:30px;">
+        <a href="{{ url_for('categories', user_id=user_id) }}"
+           class="btn">
+            ⬅ Back to Categories
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

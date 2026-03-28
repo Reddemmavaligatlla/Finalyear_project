@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="products-card">
+    <h2 class="page-title">Checkout</h2>
+
+    {% if message %}
+    <p style="color:#c62828; margin: 8px 0 16px; font-weight:500;">{{ message }}</p>
+    {% endif %}
+
+    {% if product %}
+    <div class="checkout-grid">
+        <div class="product-card product-detail-card">
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <h3 class="product-title">{{ product.product_name }}</h3>
+            <span class="category-badge">{{ product.category_display }}</span>
+            <p class="price">₹{{ product.price }}</p>
+            <p class="reason-text">{{ product.description }}</p>
+        </div>
+
+        <form method="POST" class="checkout-form">
+            <h3>Delivery Address</h3>
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" name="full_name" placeholder="Enter full name" required>
+            </div>
+            <div class="input-group">
+                <label>Mobile Number</label>
+                <input type="tel" name="mobile" maxlength="10" placeholder="10-digit mobile number" required>
+            </div>
+            <div class="input-group">
+                <label>Address</label>
+                <input type="text" name="address" placeholder="Flat, street, area" required>
+            </div>
+            <div class="input-group">
+                <label>City</label>
+                <input type="text" name="city" placeholder="City" required>
+            </div>
+            <div class="input-group">
+                <label>State</label>
+                <input type="text" name="state" placeholder="State" required>
+            </div>
+            <div class="input-group">
+                <label>Pincode</label>
+                <input type="text" name="pincode" maxlength="6" placeholder="6-digit pincode" required>
+            </div>
+
+            <div class="input-group">
+                <label>Payment Method</label>
+                <select name="payment_method" class="checkout-select">
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Credit / Debit Card">Credit / Debit Card</option>
+                    <option value="Net Banking">Net Banking</option>
+                </select>
+            </div>
+
+            <button type="submit" class="buy-btn checkout-btn">Confirm Purchase</button>
+        </form>
+    </div>
+    {% else %}
+    <p>No product selected 😕</p>
+    {% endif %}
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{{ url_for('products', user_id=user_id) }}" class="btn">
+            ⬅ Back to Products
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

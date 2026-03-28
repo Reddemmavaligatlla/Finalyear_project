@@ -1,0 +1,121 @@
+{
+    "u1001": {
+        "name": "Aarav",
+        "preferences": [
+            "Electronics",
+            "Books",
+            "Fashion"
+        ]
+    },
+    "u1002": {
+        "name": "Diya",
+        "preferences": [
+            "Electronics",
+            "Home & Kitchen"
+        ]
+    },
+    "u1003": {
+        "name": "Rahul",
+        "preferences": [
+            "Fashion",
+            "Sports"
+        ]
+    },
+    "u1004": {
+        "name": "Meera",
+        "preferences": [
+            "Books",
+            "Home & Kitchen"
+        ]
+    },
+    "u1005": {
+        "name": "Kiran",
+        "preferences": [
+            "Electronics",
+            "Fashion"
+        ]
+    },
+    "u976": {
+        "name": "Indraja",
+        "preferences": [
+            "Electronics",
+            "Books",
+            "Home & Kitchen"
+        ]
+    },
+    "u1062": {
+        "name": "Theju",
+        "preferences": [
+            "Electronics",
+            "Fashion"
+        ]
+    },
+    "u1000": {
+        "name": "Reddy",
+        "preferences": [
+            "Electronics",
+            "Home & Kitchen"
+        ]
+    },
+    "u1010": {
+        "name": "Reddy",
+        "preferences": [
+            "Electronics"
+        ]
+    },
+    "u1116": {
+        "name": "Reddy",
+        "preferences": [
+            "Toys",
+            "Sports"
+        ]
+    },
+    "u117": {
+        "name": "srav",
+        "preferences": [
+            "Books",
+            "Fashion"
+        ]
+    },
+    "u1017": {
+        "name": "sravani",
+        "preferences": [
+            "Electronics",
+            "Books"
+        ]
+    },
+    "u1107": {
+        "name": "sravani",
+        "preferences": [
+            "Home & Kitchen"
+        ]
+    },
+    "u1012": {
+        "name": "Reddy",
+        "preferences": []
+    },
+    "u1011": {
+        "name": "sravani",
+        "preferences": []
+    },
+    "u1039": {
+        "name": "BHUMIREDDY",
+        "preferences": []
+    },
+    "u1117": {
+        "name": "srav",
+        "preferences": []
+    },
+    "u1118": {
+        "name": "indraja gowda",
+        "preferences": []
+    },
+    "u1119": {
+        "name": "Reddy",
+        "preferences": [
+            "Kids Wear",
+            "Toys",
+            "Electronics"
+        ]
+    }
+}

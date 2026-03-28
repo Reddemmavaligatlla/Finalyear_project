@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card products-card">
+
+    <!-- Page Title -->
+    <h2 class="page-title">
+        {{ page_title or "🛍️ Products" }}
+    </h2>
+    <p class="subtitle">
+        Explore products selected for you
+    </p>
+
+    <!-- 🔹 Skeleton Loading -->
+    <div class="products-grid skeleton-wrapper">
+        {% for i in range(6) %}
+        <div class="product-card skeleton">
+            <div class="skeleton-img"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text short"></div>
+            <div class="skeleton-btn"></div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 🔹 Actual Products -->
+    <div class="products-grid real-products" style="display:none;">
+        {% for product in products %}
+        <div class="product-card product-card-clean">
+
+            {% if product.discount %}
+            <span class="discount-badge">
+                {{ product.discount }}% OFF
+            </span>
+            {% endif %}
+
+            <!-- Image -->
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <!-- Category -->
+            <span class="category-badge">
+                {{ product.category_display }}
+            </span>
+
+            <!-- Name -->
+            <h3 class="product-title">
+                {{ product.product_name }}
+            </h3>
+
+            <p class="product-teaser">
+                Click <strong>View Product</strong> for full details
+            </p>
+
+            <!-- Actions -->
+            <div class="cart-actions clean-actions">
+                <a class="btn-cart"
+                   href="{{ url_for('product_details', user_id=user_id, product_id=product.product_id) }}">
+                    View Product
+                </a>
+
+                <button class="btn-cart"
+                        onclick="addToCart('{{ product.category }}')">
+                    🛒 Add to Cart
+                </button>
+
+                <a class="buy-btn"
+                   href="{{ url_for('buy_product', user_id=user_id, product_id=product.product_id) }}"
+                   onclick="sendInteraction('{{ product.category }}')">
+                    Buy Now
+                </a>
+            </div>
+
+        </div>
+        {% else %}
+        <p style="grid-column: 1 / -1; text-align:center; color:#6b7280;">
+            No products found for your search.
+        </p>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+/* Skeleton loader */
+window.addEventListener("load", () => {
+    document.querySelector(".skeleton-wrapper").style.display = "none";
+    document.querySelector(".real-products").style.display = "grid";
+});
+
+function addToCart(category) {
+    sendInteraction(category);
+    alert("Added to cart 🛒");
+}
+
+function sendInteraction(category) {
+    fetch("/track_interaction/{{ user_id }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category: category })
+    });
+}
+</script>
+
+{% endblock %}

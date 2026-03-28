@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card recommendations-card">
+    {% if note %}
+    <p style="text-align:center; margin-bottom:16px; color:#5a4ad1; font-weight:500;">
+        {{ note }}
+        <a href="{{ url_for('preferences', user_id=user_id) }}">Update Preferences</a>
+    </p>
+    {% endif %}
+
+    <!-- ================= CONTENT BASED ================= -->
+    <div class="recommend-header">
+        <h2>⭐ Recommended for You</h2>
+        <p class="subtitle">Based on your preferences</p>
+    </div>
+
+    <div class="products-grid">
+        {% for product in content_recommendations %}
+        <div class="product-card highlight-card">
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <h4>{{ product.product_name }}</h4>
+            <span class="category-tag">{{ product.category }}</span>
+
+            <p class="reason-text">
+                Based on your interest in {{ product.category }}
+            </p>
+        </div>
+        {% endfor %}
+        {% if not content_recommendations %}
+        <p style="grid-column: 1 / -1; text-align:center; color:#666;">
+            No personalized items yet.
+        </p>
+        {% endif %}
+    </div>
+
+
+    <!-- ================= COLLABORATIVE ================= -->
+    <div class="recommend-header" style="margin-top:40px;">
+        <h2>👥 Users Like You Also Liked</h2>
+        <p class="subtitle">Popular among similar users</p>
+    </div>
+
+    <div class="products-grid">
+        {% for product in collaborative_recommendations %}
+        <div class="product-card">
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <h4>{{ product.product_name }}</h4>
+            <span class="category-tag">{{ product.category }}</span>
+
+            <p class="reason-text">
+                Liked by users with similar interests
+            </p>
+        </div>
+        {% endfor %}
+        {% if not collaborative_recommendations %}
+        <p style="grid-column: 1 / -1; text-align:center; color:#666;">
+            No similar-user recommendations yet.
+        </p>
+        {% endif %}
+    </div>
+
+
+    <!-- ================= TRENDING ================= -->
+    <div class="recommend-header" style="margin-top:40px;">
+        <h2>🔥 Trending Now</h2>
+        <p class="subtitle">Most interacted products</p>
+    </div>
+
+    <div class="products-grid">
+        {% for product in trending_recommendations %}
+        <div class="product-card">
+            <div class="product-image">
+                <img
+                    src="{{ product_image_url(product.product_name, product.category) }}"
+                    alt="{{ product.product_name }}"
+                >
+            </div>
+
+            <h4>{{ product.product_name }}</h4>
+            <span class="category-tag">{{ product.category }}</span>
+
+            <p class="reason-text">
+                Trending based on recent activity
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

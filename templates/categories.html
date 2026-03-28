@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card dashboard-card">
+
+    <!-- Header -->
+    <div class="welcome-section">
+        <h2>Select a Category 🧭</h2>
+        <p class="subtitle">
+            Choose a category to explore suitable products
+        </p>
+    </div>
+
+    <!-- Categories Grid -->
+    <div class="dashboard-grid">
+
+        <!-- ALL -->
+        <a href="{{ url_for('category_products', category='all', user_id=user_id) }}"
+           class="dash-card">
+            <div class="dash-icon">🛍️</div>
+            <h3>All Products</h3>
+            <p>Browse everything</p>
+        </a>
+
+        <!-- MEN -->
+        <a href="{{ url_for('category_products', category='men', user_id=user_id) }}"
+           class="dash-card">
+            <div class="dash-icon">👔</div>
+            <h3>Men</h3>
+            <p>Fashion & essentials for men</p>
+        </a>
+
+        <!-- WOMEN -->
+        <a href="{{ url_for('category_products', category='women', user_id=user_id) }}"
+           class="dash-card">
+            <div class="dash-icon">👗</div>
+            <h3>Women</h3>
+            <p>Trending styles for women</p>
+        </a>
+
+        <!-- KIDS -->
+        <a href="{{ url_for('category_products', category='kids', user_id=user_id) }}"
+           class="dash-card">
+            <div class="dash-icon">🧸</div>
+            <h3>Kids</h3>
+            <p>Fun & comfort for kids</p>
+        </a>
+
+    </div>
+</div>
+{% endblock %}

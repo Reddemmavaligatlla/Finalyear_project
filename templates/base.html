@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "RecoMart" }}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a class="logo" href="{{ url_for('user_login') }}">
+                <span class="logo-mark">R</span>
+                <span class="logo-text">RecoMart</span>
+            </a>
+
+            <div class="nav-search">
+                {% if user_id %}
+                <form method="GET" action="{{ url_for('products', user_id=user_id) }}" class="nav-search-form">
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search for products, brands and more"
+                        value="{{ nav_query }}"
+                    >
+                </form>
+                {% else %}
+                <input type="text" placeholder="Search for products, brands and more" disabled>
+                {% endif %}
+            </div>
+
+            <div class="nav-links">
+                {% if user_id %}
+                    <a href="{{ url_for('dashboard', user_id=user_id) }}">Home</a>
+                    <a href="{{ url_for('products', user_id=user_id) }}">Products</a>
+                    <a href="{{ url_for('orders', user_id=user_id) }}">Orders</a>
+                    <a href="{{ url_for('recommendations', user_id=user_id) }}">Recommendations</a>
+                    <a href="{{ url_for('preferences', user_id=user_id) }}">Preferences</a>
+                {% else %}
+                    <a href="{{ url_for('user_login') }}">Login</a>
+                    <a href="{{ url_for('register.register') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ✅ ADDED: Category filtering JS (for Home page categories) -->
+    <script>
+        function filterCategory(category) {
+            let products = document.querySelectorAll(".product-card");
+            let kidsSub = document.getElementById("kidsSub");
+
+            if (kidsSub) kidsSub.style.display = "none";
+
+            products.forEach(product => {
+                if (category === "all" || product.classList.contains(category)) {
+                    product.style.display = "block";
+                } else {
+                    product.style.display = "none";
+                }
+            });
+        }
+
+        function showKids() {
+            let kidsSub = document.getElementById("kidsSub");
+            if (kidsSub) kidsSub.style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>
+

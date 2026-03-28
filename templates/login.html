@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Welcome Back</h2>
+    <p class="subtitle" style="text-align:center; margin-bottom: 14px;">
+        Sign in to continue to RecoMart
+    </p>
+
+    {% if registered %}
+        <p style="text-align:center; color:#2e7d32; margin-bottom:10px;">
+            Registration successful. Please login with your email and password.
+        </p>
+    {% endif %}
+
+    {% if message %}
+        <p style="text-align:center; color:#764ba2; margin-bottom:10px;">
+            {{ message }}
+        </p>
+    {% endif %}
+
+    <form method="POST">
+
+        <div class="input-group">
+            <label>Email</label>
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter registered email"
+                required
+            >
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input 
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <!-- 🔹 FORGOT PASSWORD -->
+    <div style="text-align:center; margin-top:12px;">
+        <a href="{{ url_for('register.forgot_password') }}">
+            Forgot Password?
+        </a>
+    </div>
+
+    <!-- 🔹 REGISTER -->
+    <div style="text-align:center; margin-top:6px;">
+        New user?
+        <a href="{{ url_for('register.register') }}">
+            Create an account
+        </a>
+    </div>
+
+    <div class="footer-text">
+        Secure login with your registered account
+    </div>
+</div>
+{% endblock %}
+

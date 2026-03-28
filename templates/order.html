@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="products-card">
+
+    <h2 class="page-title">My Orders</h2>
+
+    {% if orders %}
+        <div class="products-grid">
+            {% for order in orders %}
+            <div class="product-card order-card">
+                <div class="product-image">
+                    <img
+                        src="{{ product_image_url(order.product_name, order.category) }}"
+                        alt="{{ order.product_name }}"
+                    >
+                </div>
+                <h3>{{ order.product_name }}</h3>
+                <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                <p><strong>Price:</strong> ₹{{ order.price }}</p>
+                <p><strong>Payment:</strong> {{ order.payment_method }}</p>
+                <p><strong>Placed On:</strong> {{ order.ordered_at }}</p>
+                <p><strong>Expected Delivery:</strong> {{ order.delivery_date }}</p>
+                <p class="order-status-chip">Status: {{ order.status }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align:center;">No orders yet 😕</p>
+    {% endif %}
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{{ url_for('products', user_id=user_id) }}" class="btn" style="max-width:300px; margin:0 auto;">
+            Continue Shopping
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

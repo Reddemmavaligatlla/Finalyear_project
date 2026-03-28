@@ -1,0 +1,28 @@
+{
+    "reddemmavalligatla9@gmail.com": {
+        "password": "reddy@1234"
+    },
+    "teju@gmail.com": {
+        "password": "teju@123"
+    },
+    "reddemma995@gmail.com": {
+        "password": "srav123"
+    },
+    "reddy@gmail.com": {
+        "password": "reddyy",
+        "user_id": "u1119",
+        "name": "Reddy"
+    },
+    "reddii@gmail.com": {
+        "user_id": "u1117",
+        "name": "srav",
+        "mobile": "8976768971",
+        "password": "srav123"
+    },
+    "indu@gmail.com": {
+        "user_id": "u1118",
+        "name": "indraja gowda",
+        "mobile": "7890865432",
+        "password": "indu@123"
+    }
+}
